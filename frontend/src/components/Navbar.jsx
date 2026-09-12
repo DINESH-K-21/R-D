@@ -34,6 +34,9 @@ export default function Navbar() {
           <Link to="/cart" className="hover:text-clay transition-colors">
             Cart{count > 0 ? ` (${count})` : ""}
           </Link>
+          <Link to="/products/new" className="hover:text-clay transition-colors">
+            Add product
+          </Link>
         </nav>
       </div>
     </header>
