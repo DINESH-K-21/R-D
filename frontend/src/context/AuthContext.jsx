@@ -14,20 +14,20 @@ export function AuthProvider({ children }) {
       return;
     }
     authApi
-      .get("/auth/me")
+      .get("/me")
       .then((res) => setUser(res.data))
       .catch(() => localStorage.removeItem("token"))
       .finally(() => setLoading(false));
   }, []);
 
   async function login(email, password) {
-    const res = await authApi.post("/auth/login", { email, password });
+    const res = await authApi.post("/login", { email, password });
     localStorage.setItem("token", res.data.token);
     setUser(res.data.user);
   }
 
   async function register(name, email, password) {
-    const res = await authApi.post("/auth/register", { name, email, password });
+    const res = await authApi.post("/register", { name, email, password });
     localStorage.setItem("token", res.data.token);
     setUser(res.data.user);
   }
