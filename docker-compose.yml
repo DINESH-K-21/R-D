@@ -1,0 +1,84 @@
+
+services:
+
+  auth-db:
+    image: postgres:16
+    container_name: auth_postgres
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+      POSTGRES_DB: auth_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - auth_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    restart: always
+
+  product-db:
+    image: postgres:16
+    container_name: product_postgres
+    environment:
+      POSTGRES_USER: product_user
+      POSTGRES_PASSWORD: product_password
+      POSTGRES_DB: product_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - product_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    restart: always
+
+  # 2. Auth Microservice (Backend)
+  auth-service:
+    build: ./backend/auth-service # Unga backend folder path-a inga podunga
+    container_name: auth-service
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - DATABASE_URL=postgresql://auth_user:auth_password@auth_postgres:5432/auth_db
+      - JWT_SECRET=your-secret-here
+    depends_on:
+      - auth-db
+    networks:
+      - app-network
+    restart: always
+
+  product-service:
+    build: ./backend/product-service # Unga backend folder path-a inga podunga
+    container_name: product-service
+    ports:
+      - "5002:5002"
+    environment:  
+      - PORT=5002
+      - DATABASE_URL=postgresql://product_user:product_password@product_postgres:5432/product_db
+      - JWT_SECRET=your-secret-here
+    depends_on:
+      - product-db
+    networks:
+      - app-network
+    restart: always
+
+  # 3. Frontend Service (React + Nginx)
+  frontend:
+    build: ./frontend # Unga frontend folder path-a inga podunga
+    container_name: frontend-app
+    ports:
+      - "3020:80"
+    depends_on:
+      - auth-service
+      - product-service
+    networks:
+      - app-network
+    restart: always
+
+volumes:
+  auth_data:
+  product_data:
+
+networks:
+  app-network:
+    driver: bridge
