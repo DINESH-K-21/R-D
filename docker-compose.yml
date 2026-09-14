@@ -1,6 +1,5 @@
 
 services:
-
   auth-db:
     image: postgres:16
     container_name: auth_postgres
@@ -34,13 +33,11 @@ services:
 
   auth-service:
     build: ./backend/auth-service 
-    container_name: auth-service
+    container_name: auth-container
     ports:
       - "5001:5001"
-    environment:
-      - PORT=5001
-      - DATABASE_URL=postgresql://auth_user:auth_password@auth_postgres:5432/auth_db
-      - JWT_SECRET=your-secret-here
+    env_file: 
+      - ./backend/auth-service/.env.docker
     depends_on:
       - auth-db
     networks:
@@ -49,13 +46,11 @@ services:
 
   product-service:
     build: ./backend/product-service 
-    container_name: product-service
+    container_name: product-container
     ports:
       - "5002:5002"
-    environment:  
-      - PORT=5002
-      - DATABASE_URL=postgresql://product_user:product_password@product_postgres:5432/product_db
-      - JWT_SECRET=your-secret-here
+    env_file: 
+      - ./backend/product-service/.env.docker
     depends_on:
       - product-db
     networks:
@@ -64,7 +59,9 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: frontend-app
+    container_name: frontend-container
+    env_file: 
+      - ./frontend/.env.production
     ports:
       - "3020:80"
     depends_on:
