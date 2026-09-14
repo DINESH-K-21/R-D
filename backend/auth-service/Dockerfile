@@ -9,7 +9,7 @@ RUN npm ci
 # Prisma schema copy pannu - generate ku thevai
 COPY prisma ./prisma
 
-ENV DATABASE_URL="postgresql://auth_user:auth_password@auth_postgres:5432/auth_db"
+# ENV DATABASE_URL=postgresql://auth_user:auth_password@auth_postgres:5432/auth_db
 
 # Prisma client generate pannu
 RUN npx prisma generate
