@@ -11,7 +11,7 @@ export default function ProductDetail() {
   const [qty, setQty] = useState(1);
 
   useEffect(() => {
-    productApi.get(`/${id}`).then((res) => setProduct(res.data));
+    productApi.get(`/products/${id}`).then((res) => setProduct(res.data));
   }, [id]);
 
   if (!product) return <p className="max-w-6xl mx-auto px-6 py-14 text-ink/50">Loading…</p>;

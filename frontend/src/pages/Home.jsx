@@ -9,13 +9,13 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    productApi.get("/categories").then((res) => setCategories(res.data));
+    productApi.get("/products/categories").then((res) => setCategories(res.data));
   }, []);
 
   useEffect(() => {
     setLoading(true);
     productApi
-      .get("/", { params: activeCategory ? { category: activeCategory } : {} })
+      .get("/products", { params: activeCategory ? { category: activeCategory } : {} })
       .then((res) => setProducts(res.data))
       .finally(() => setLoading(false));
   }, [activeCategory]);

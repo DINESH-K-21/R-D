@@ -31,9 +31,9 @@ services:
       - app-network
     restart: always
 
-  # 2. Auth Microservice (Backend)
+
   auth-service:
-    build: ./backend/auth-service # Unga backend folder path-a inga podunga
+    build: ./backend/auth-service 
     container_name: auth-service
     ports:
       - "5001:5001"
@@ -48,7 +48,7 @@ services:
     restart: always
 
   product-service:
-    build: ./backend/product-service # Unga backend folder path-a inga podunga
+    build: ./backend/product-service 
     container_name: product-service
     ports:
       - "5002:5002"
@@ -62,9 +62,8 @@ services:
       - app-network
     restart: always
 
-  # 3. Frontend Service (React + Nginx)
   frontend:
-    build: ./frontend # Unga frontend folder path-a inga podunga
+    build: ./frontend
     container_name: frontend-app
     ports:
       - "3020:80"

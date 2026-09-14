@@ -21,7 +21,7 @@ export default function AddProduct() {
 
   useEffect(() => {
     productApi
-      .get("/categories")
+      .get("/products/categories")
       .then((res) => {
         setCategories(res.data);
         if (res.data.length > 0) {
@@ -44,7 +44,7 @@ export default function AddProduct() {
     setSaving(true);
 
     try {
-      await productApi.post("/", {
+      await productApi.post("/products", {
         ...form,
         price: Number(form.price),
         stock: Number(form.stock),
