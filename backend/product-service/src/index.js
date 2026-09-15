@@ -10,6 +10,6 @@ app.use(express.json());
 
 app.get("/health", (req, res) => res.json({ status: "product-service ok" }));
 app.use("/api/products", productRoutes);
-
+app.use("/", (req, res) => res.send("you are in product service"));
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => console.log(`Product service running on port ${PORT}`));
