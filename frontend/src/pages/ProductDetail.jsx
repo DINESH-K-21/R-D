@@ -7,7 +7,7 @@ export default function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { addItem } = useCart();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState([]);
   const [qty, setQty] = useState(1);
 
   useEffect(() => {
