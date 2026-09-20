@@ -1,11 +1,11 @@
 import axios from "axios";
 
 export const authApi = axios.create({
-  baseURL: import.meta.env.VITE_AUTH_API_URL || "http://localhost:5001/api",
+  baseURL: import.meta.env.VITE_AUTH_API_URL ,
 });
 
 export const productApi = axios.create({
-  baseURL: import.meta.env.VITE_PRODUCT_API_URL || "http://localhost:5002/api",
+  baseURL: import.meta.env.VITE_PRODUCT_API_URL,
 });
 
 // attach token automatically if present
