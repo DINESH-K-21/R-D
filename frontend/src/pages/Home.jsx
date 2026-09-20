@@ -9,14 +9,14 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    productApi.get("/products/categories").then((res) => setCategories(res.data));
+    productApi.get("/products/categories").then((res) => setCategories(Array.isArray(res.data) ? res.data : []));
   }, []);
 
   useEffect(() => {
     setLoading(true);
     productApi
       .get("/products", { params: activeCategory ? { category: activeCategory } : {} })
-      .then((res) => setProducts(res.data))
+      .then((res) => setProducts(Array.isArray(res.data) ? res.data : []))
       .finally(() => setLoading(false));
   }, [activeCategory]);
 
